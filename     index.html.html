@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Me perdonas? 💗</title>
+<style>
+* { box-sizing: border-box; }
+body {
+margin: 0;
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 24px 12px;
+background: linear-gradient(135deg, #ffe4ed, #fff5f7);
+font-family: "Segoe UI", sans-serif;
+color: #754456;
+overflow-x: hidden;
+}
+.card {
+background: #fff;
+width: min(90%, 430px);
+padding: 35px 25px;
+border-radius: 25px;
+text-align: center;
+box-shadow: 0 10px 35px #d88ca633;
+position: relative;
+z-index: 1;
+}
+.heart { font-size: 55px; animation: pulse 1.5s infinite; }
+@keyframes pulse { 50% { transform: scale(1.15); } }
+h1 { color: #d75d8a; }
+button {
+background: #e982a8;
+color: white;
+border: 0;
+border-radius: 30px;
+padding: 13px 24px;
+font-size: 16px;
+cursor: pointer;
+margin-top: 18px;
+transition: .2s;
+}
+button:hover { background: #d75d8a; transform: scale(1.04); }
+#carta {
+display: none;
+margin-top: 25px;
+line-height: 1.8;
+text-align: left;
+animation: aparecer .8s ease;
+}
+#carta h2 { color: #d75d8a; text-align: center; }
+@keyframes aparecer {
+from { opacity: 0; transform: translateY(15px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.floating {
+position: fixed;
+bottom: -30px;
+animation: flotar 6s linear forwards;
+pointer-events: none;
+z-index: 2;
+}
+@keyframes flotar {
+to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+.firma { text-align: center; color: #d75d8a; font-weight: bold; }
+</style>
+</head>
+<body>
+<main class="card">
+<div class="heart" id="inicio-corazon">💗</div>
+<h1 id="inicio-titulo">¿Me perdonas?</h1>
+<p id="inicio-texto">Hay algo que quiero decirte, mejor amiga...</p>
+
+<button id="abrir" onclick="abrirCarta()">Abrir mi cartita 💌</button>
+
+<div id="carta">
+<h2>Para Mayri 🌷</h2>
+<p>Mayri, quiero pedirte perdón por todo. Sé que casi siempre peleamos. Sé que un perdón no va a arreglar nada de lo que ya está hecho, pero yo no quiero perder tu amistad, que es tan valiosa para mí.</p>
+<p>No sé qué sería mi vida sin ti. Tú fuiste la niña que me regresó la sonrisa y la alegría. Tú me hacías reír cuando yo quería estar solo y callado, y eso siempre te lo voy a agradecer.</p>
+<p>Sé que no me tienes mucha confianza porque piensas que te voy a criticar, pero no, yo jamás te criticaría en mi vida.</p>
+<p>Tú eres mi todo. Tú eres la razón por la que voy a la escuela. Ya no sé qué más decirte porque no hay palabras para explicar mi aprecio hacia ti.</p>
+<p class="firma">TQM 🫰💖</p>
+<p class="firma">🌸 🦋 💗 🦋 🌸</p>
+</div>
+</main>
+
+<div id="youtube-player" aria-hidden="true"
+style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;"></div>
+
+<script>
+let player;
+let youtubeReady = false;
+
+const ytScript = document.createElement("script");
+ytScript.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(ytScript);
+
+function onYouTubeIframeAPIReady() {
+player = new YT.Player("youtube-player", {
+width: "200",
+height: "200",
+videoId: "ThPPVxB2D9c",
+playerVars: { playsinline: 1 },
+events: {
+onReady: function () { youtubeReady = true; }
+}
+});
+}
+
+function abrirCarta() {
+document.getElementById("carta").style.display = "block";
+document.getElementById("abrir").style.display = "none";
+document.getElementById("inicio-corazon").style.display = "none";
+document.getElementById("inicio-titulo").style.display = "none";
+document.getElementById("inicio-texto").style.display = "none";
+
+if (youtubeReady && player && player.playVideo) {
+player.playVideo();
+}
+
+corazones();
+}
+
+function corazones() {
+for (let i = 0; i < 25; i++) {
+const corazon = document.createElement("div");
+corazon.className = "floating";
+corazon.textContent = ["💗", "💖", "💕", "🌸"][Math.floor(Math.random() * 4)];
+corazon.style.left = Math.random() * 100 + "vw";
+corazon.style.fontSize = (15 + Math.random() * 20) + "px";
+corazon.style.animationDuration = (3 + Math.random() * 4) + "s";
+document.body.appendChild(corazon);
+setTimeout(() => corazon.remove(), 7000);
+}
+}
+</script>
+</body>
+</html>
